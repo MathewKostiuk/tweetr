@@ -42,6 +42,11 @@ $(document).ready(function() {
 
   function renderTweets(tweets) {
     $('#tweets-container').empty();
+
+    tweets.sort(function(a, b) {
+      return b.created_at - a.created_at;
+    });
+
     tweets.forEach(function(tweetData) {
       var $tweet = createTweetElement(tweetData);
       $('#tweets-container').append($tweet);
@@ -49,7 +54,7 @@ $(document).ready(function() {
   }
 
   function createTweetElement(tweetData) {
-    var timeSince = new Date(tweetData.created_at).toISOString();
+    var timeSince = new Date(tweetData.created_at);
     var $header = $('<header/>').append(
       $('<h1/>', {text: tweetData.user.name})).append(
       $('<img/>', {"class": 'tweet-avatar', src: tweetData.user.avatars.small})).append(
@@ -65,7 +70,7 @@ $(document).ready(function() {
     var $footer = $('<footer/>').append(
       $('<time/>', {'class': 'timeago', text: timeSince})).append($icons);
 
-    $('.timeago').text($.timeago(timeSince));
+   // $('.timeago').text($.timeago(timeSince));
 
     var $tweet = $('<article/>', {'class': 'tweet-article'}).append($header).append($body).append($footer);
     return $tweet;
