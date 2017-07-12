@@ -24,7 +24,6 @@ $(document).ready(function() {
       return window.alert('Tweet has exceeded the allowed character count. Please Revise!');
     }
 
-
     $.ajax({
       type: 'POST',
       url: '/tweets',
@@ -77,4 +76,14 @@ $(document).ready(function() {
   }
 
 loadTweets();
+
+$('#compose-button').click(function() {
+  if ($('.new-tweet').is(':hidden')) {
+    $('.new-tweet').show('fast');
+    $('.text-area').focus();
+  } else {
+    $('.new-tweet').slideUp();
+  }
+});
+
 });

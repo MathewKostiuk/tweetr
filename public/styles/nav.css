@@ -22,3 +22,10 @@
   font-size: 200%;
   line-height: 80px;
 }
+
+#compose-button {
+  height: 70px;
+  width: 70px;
+  float: right;
+  cursor: pointer;
+}
