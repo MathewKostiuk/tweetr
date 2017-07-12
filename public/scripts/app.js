@@ -10,9 +10,6 @@ $(document).ready(function() {
     .done(function(tweets) {
       renderTweets(tweets);
     })
-    // .done(function(tweets) {
-      //
-    // })
   }
 
   function handleNewTweet(event) {
@@ -31,11 +28,8 @@ $(document).ready(function() {
 
   $form.on('submit', handleNewTweet);
 
-  // Test / driver code (temporary)
- // console.log($tweet); // to see what it looks like
- // $('#tweets-container').append($tweet); // to add it to the page so we can make sure it's got all the right elements, classes, etc.
-
   function renderTweets(tweets) {
+    $('#tweets-container').empty();
     tweets.forEach(function(tweetData) {
       var $tweet = createTweetElement(tweetData);
       $('#tweets-container').append($tweet);
