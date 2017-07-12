@@ -102,7 +102,7 @@ body {
 }
 
 .tweet-buttons * {
-  /*visibility: hidden;*/
+  visibility: hidden;
   height: 20px;
   width: 20px;
   float: right;
@@ -111,7 +111,7 @@ body {
 }
 
 .tweet-article:hover .tweet-buttons * {
-  /*visibility: visible;*/
+  visibility: visible;
 }
 
 /*
