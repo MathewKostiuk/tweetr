@@ -5,23 +5,35 @@
  */
 $(document).ready(function() {
 
-  function fetchTweets() {
+  function loadTweets() {
     $.getJSON('/tweets')
-    .done(function(tweets) {
-      renderTweets(tweets);
-    })
+    .done(renderTweets)
   }
 
   function handleNewTweet(event) {
     event.preventDefault();
-    var $form = $(this);
+    var form = $(this).serialize();
+    var formLength = $('.text-area').val().length;
+    console.log($('.text-area').val().length);
+
+    if (formLength === 0) {
+      return window.alert('Empty form field, please tweet!');
+    }
+
+    if (formLength > 140) {
+      return window.alert('Tweet has exceeded the allowed character count. Please Revise!');
+    }
+
 
     $.ajax({
       type: 'POST',
       url: '/tweets',
-      data: $form.serialize()
+      data: form
     })
-      .done(fetchTweets);
+      .done(function() {
+        $('.text-area').val('');
+      })
+      .done(loadTweets);
   }
 
   var $form = $('#post-tweet');
@@ -59,5 +71,5 @@ $(document).ready(function() {
     return $tweet;
   }
 
-fetchTweets();
+loadTweets();
 });
