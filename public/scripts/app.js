@@ -5,6 +5,7 @@
  */
 $(document).ready(function() {
 
+// Functions for loading, rendering, and creating new tweets
   function loadTweets() {
     $.getJSON('/tweets')
     .done(renderTweets)
@@ -14,7 +15,6 @@ $(document).ready(function() {
     event.preventDefault();
     var form = $(this).serialize();
     var formLength = $('.text-area').val().length;
-    console.log($('.text-area').val().length);
 
     if (formLength === 0) {
       return window.alert('Empty form field, please tweet!');
@@ -31,6 +31,7 @@ $(document).ready(function() {
     })
       .done(function() {
         $('.text-area').val('');
+        $('.counter').html('140');
       })
       .done(loadTweets);
   }
@@ -52,8 +53,9 @@ $(document).ready(function() {
     })
   }
 
+// Using jQuery to create DOM elements, then return a jQuery object with the data
   function createTweetElement(tweetData) {
-    var timeSince = new Date(tweetData.created_at);
+    var $timeSince = moment(tweetData.created_at).fromNow();
     var $header = $('<header/>').append(
       $('<h1/>', {text: tweetData.user.name})).append(
       $('<img/>', {"class": 'tweet-avatar', src: tweetData.user.avatars.small})).append(
@@ -67,9 +69,8 @@ $(document).ready(function() {
       $('<img/>', {id: 'love', src: 'https://cdn2.iconfinder.com/data/icons/pittogrammi/142/80-512.png'}));
 
     var $footer = $('<footer/>').append(
-      $('<time/>', {'class': 'timeago', text: timeSince})).append($icons);
+      $('<time/>', {'class': 'timeago', text: $timeSince})).append($icons);
 
-   // $('.timeago').text($.timeago(timeSince));
 
     var $tweet = $('<article/>', {'class': 'tweet-article'}).append($header).append($body).append($footer);
     return $tweet;
@@ -77,6 +78,7 @@ $(document).ready(function() {
 
 loadTweets();
 
+// Compose button click handler
 $('#compose-button').click(function() {
   if ($('.new-tweet').is(':hidden')) {
     $('.new-tweet').show('fast');
