@@ -5,23 +5,24 @@
  */
 $(document).ready(function() {
 
-// Functions for loading, rendering, and creating new tweets
+// GET request to /tweets
   function loadTweets() {
     $.getJSON('/tweets')
     .done(renderTweets)
   }
 
+// Handles new tweet, checking for errors before making POST request
   function handleNewTweet(event) {
     event.preventDefault();
     var form = $(this).serialize();
     var formLength = $('.text-area').val().length;
 
     if (formLength === 0) {
-      return window.alert('Empty form field, please tweet!');
+      return $.notify('Empty form field, please tweet!', 'error');
     }
 
     if (formLength > 140) {
-      return window.alert('Tweet has exceeded the allowed character count. Please Revise!');
+      return $.notify('Tweet has exceeded the allowed character count. Please revise your tweet', 'warn')
     }
 
     $.ajax({
@@ -36,10 +37,12 @@ $(document).ready(function() {
       .done(loadTweets);
   }
 
+// Form submit click event handler
   var $form = $('#post-tweet');
 
   $form.on('submit', handleNewTweet);
 
+// Popoulate page with tweets, reverse chronological order
   function renderTweets(tweets) {
     $('#tweets-container').empty();
 
@@ -79,13 +82,13 @@ $(document).ready(function() {
 loadTweets();
 
 // Compose button click handler
-$('#compose-button').click(function() {
-  if ($('.new-tweet').is(':hidden')) {
-    $('.new-tweet').show('fast');
-    $('.text-area').focus();
-  } else {
-    $('.new-tweet').slideUp();
-  }
-});
+  $('#compose-button').click(function() {
+    if ($('.new-tweet').is(':hidden')) {
+      $('.new-tweet').show('fast');
+      $('.text-area').focus();
+    } else {
+      $('.new-tweet').slideUp();
+    }
+  });
 
 });
