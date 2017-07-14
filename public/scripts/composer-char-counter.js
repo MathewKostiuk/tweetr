@@ -7,7 +7,7 @@ $(document).ready(function() {
     var textSubtract = totalText.length;
     var maxCount = 140;
 
-   $(this).parent().children('.counter').html(counter - textSubtract);
+    $(this).parent().children('.counter').html(counter - textSubtract);
 
     if (textSubtract >= maxCount) {
       $(".new-tweet span").addClass('over-limit');

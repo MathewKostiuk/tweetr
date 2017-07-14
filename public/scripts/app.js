@@ -4,59 +4,7 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 $(document).ready(function() {
-
-// GET request to /tweets
-  function loadTweets() {
-    $.getJSON('/tweets')
-    .done(renderTweets)
-  }
-
-// Handles new tweet, checking for errors before making POST request
-  function handleNewTweet(event) {
-    event.preventDefault();
-    var form = $(this).serialize();
-    var formLength = $('.text-area').val().length;
-
-    if (formLength === 0) {
-      return $.notify('Empty form field, please tweet!', 'error');
-    }
-
-    if (formLength > 140) {
-      return $.notify('Tweet has exceeded the allowed character count. Please revise your tweet', 'warn')
-    }
-
-    $.ajax({
-      type: 'POST',
-      url: '/tweets',
-      data: form
-    })
-      .done(function() {
-        $('.text-area').val('');
-        $('.counter').html('140');
-      })
-      .done(loadTweets);
-  }
-
-// Form submit click event handler
-  var $form = $('#post-tweet');
-
-  $form.on('submit', handleNewTweet);
-
-// Popoulate page with tweets, reverse chronological order
-  function renderTweets(tweets) {
-    $('#tweets-container').empty();
-
-    tweets.sort(function(a, b) {
-      return b.created_at - a.created_at;
-    });
-
-    tweets.forEach(function(tweetData) {
-      var $tweet = createTweetElement(tweetData);
-      $('#tweets-container').append($tweet);
-    })
-  }
-
-// Using jQuery to create DOM elements, then return a jQuery object with the data
+  // Using jQuery to create DOM elements, then return a jQuery object with the data
   function createTweetElement(tweetData) {
     var $timeSince = moment(tweetData.created_at).fromNow();
     var $header = $('<header/>').append(
@@ -79,9 +27,58 @@ $(document).ready(function() {
     return $tweet;
   }
 
-loadTweets();
+  function renderTweets(tweets) {
+    $('#tweets-container').empty();
 
-// Compose button click handler
+    tweets.sort(function(a, b) {
+      return b.created_at - a.created_at;
+    });
+
+    tweets.forEach(function(tweetData) {
+      var $tweet = createTweetElement(tweetData);
+      $('#tweets-container').append($tweet);
+    });
+  }
+
+  // GET request to /tweets
+  function loadTweets() {
+    $.getJSON('/tweets')
+      .done(renderTweets);
+  }
+
+  // Handles new tweet, checking for errors before making POST request
+  function handleNewTweet(event) {
+    event.preventDefault();
+    var form = $(this).serialize();
+    var formLength = $('.text-area').val().length;
+
+    if (formLength === 0) {
+      return $.notify('Empty form field, please tweet!', 'error');
+    }
+
+    if (formLength > 140) {
+      return $.notify('Tweet has exceeded the allowed character count. Please revise your tweet', 'warn');
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/tweets',
+      data: form
+    })
+      .done(function() {
+        $('.text-area').val('');
+        $('.counter').html('140');
+      })
+      .done(loadTweets);
+  }
+
+  // Form submit click event handler
+  var $form = $('#post-tweet');
+
+  $form.on('submit', handleNewTweet);
+
+
+  // Compose button click handler
   $('#compose-button').click(function() {
     if ($('.new-tweet').is(':hidden')) {
       $('.new-tweet').show('fast');
@@ -90,5 +87,9 @@ loadTweets();
       $('.new-tweet').slideUp();
     }
   });
+  // Popoulate page with tweets, reverse chronological order
+
+
+  loadTweets();
 
 });
