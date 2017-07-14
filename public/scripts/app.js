@@ -84,6 +84,7 @@ $(document).ready(function() {
     if ($('.new-tweet').is(':hidden')) {
       $('.new-tweet').show('fast');
       $('.text-area').focus();
+      $('body').scrollTop(0);
     } else {
       $('.new-tweet').slideUp();
     }
