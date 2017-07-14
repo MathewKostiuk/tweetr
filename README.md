@@ -1,10 +1,14 @@
 # Tweeter Project
 
+![tweeter-screenshot](https://github.com/MathewKostiuk/tweetr/blob/master/docs/tweeter-1.png)
+
 Tweeter is a simple, single-page Twitter clone.
 
 Users can turn text into 'tweets'. Each tweet generates a new content-box which displays at the top of the page.
 
 Hope you like it!
+
+![tweeter-screenshot](https://github.com/MathewKostiuk/tweetr/blob/master/docs/tweeter-2.png)
 
 ## Getting Started
 
