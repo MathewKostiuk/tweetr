@@ -1,9 +1,9 @@
 /*
  * Client-side JS logic goes here
  * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 $(document).ready(function() {
+
   // Using jQuery to create DOM elements, then return a jQuery object with the data
   function createTweetElement(tweetData) {
     var $timeSince = moment(tweetData.created_at).fromNow();
@@ -27,6 +27,7 @@ $(document).ready(function() {
     return $tweet;
   }
 
+  // Popoulate page with tweets, reverse chronological order
   function renderTweets(tweets) {
     $('#tweets-container').empty();
 
@@ -87,7 +88,6 @@ $(document).ready(function() {
       $('.new-tweet').slideUp();
     }
   });
-  // Popoulate page with tweets, reverse chronological order
 
 
   loadTweets();
